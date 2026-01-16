@@ -38,11 +38,13 @@ struct FullscreenNotification: View {
                     Button(action: dismiss) {
                         Text("general_close".loco()).padding(.vertical, 5).padding(.horizontal, 20)
                     }
-                    Button(action: joinEvent) {
-                        Text("notifications_meetingbar_join_event_action".loco()).padding(
-                            .vertical, 5
-                        ).padding(.horizontal, 25)
-                    }.background(Color.accentColor).cornerRadius(5)
+                    if event.meetingLink != nil {
+                        Button(action: joinEvent) {
+                            Text("notifications_meetingbar_join_event_action".loco()).padding(
+                                .vertical, 5
+                            ).padding(.horizontal, 25)
+                        }.background(Color.accentColor).cornerRadius(5)
+                    }
                 }
             }
         }
