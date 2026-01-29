@@ -13,10 +13,22 @@ struct FullscreenNotification: View {
     var event: MBEvent
     var window: NSWindow?
 
+    @State private var canDismiss = false
+
     var body: some View {
         ZStack {
             Rectangle.semiOpaqueWindow()
             VStack {
+                HStack(spacing: 8) {
+                    Circle()
+                        .fill(Color(event.calendar.color))
+                        .frame(width: 12, height: 12)
+                    Text(event.calendar.title)
+                        .font(.headline)
+                        .foregroundColor(.secondary)
+                }
+                .padding(.bottom, 4)
+
                 HStack {
                     Image(nsImage: getIconForMeetingService(event.meetingLink?.service))
                         .resizable().frame(width: 25, height: 25)
@@ -35,8 +47,10 @@ struct FullscreenNotification: View {
                 }
 
                 HStack(spacing: 30) {
-                    Button(action: dismiss) {
-                        Text("general_close".loco()).padding(.vertical, 5).padding(.horizontal, 20)
+                    if canDismiss {
+                        Button(action: dismiss) {
+                            Text("general_close".loco()).padding(.vertical, 5).padding(.horizontal, 20)
+                        }
                     }
                     if event.meetingLink != nil {
                         Button(action: joinEvent) {
@@ -50,6 +64,11 @@ struct FullscreenNotification: View {
         }
         .colorScheme(.dark)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                canDismiss = true
+            }
+        }
     }
 
     func dismiss() {
