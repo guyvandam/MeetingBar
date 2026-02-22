@@ -30,8 +30,10 @@ struct FullscreenNotification: View {
                 .padding(.bottom, 4)
 
                 HStack {
-                    Image(nsImage: getIconForMeetingService(event.meetingLink?.service))
-                        .resizable().frame(width: 25, height: 25)
+                    if event.meetingLink?.service != nil {
+                        Image(nsImage: getIconForMeetingService(event.meetingLink?.service))
+                            .resizable().frame(width: 25, height: 25)
+                    }
                     Text(event.title).font(.title)
                 }
                 VStack(spacing: 10) {
