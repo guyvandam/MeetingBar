@@ -10,7 +10,10 @@ INSTALL_DIR = /Applications
 
 build:
 	xcodebuild -project $(PROJECT) -scheme $(SCHEME) -configuration $(CONFIGURATION) \
-		-derivedDataPath $(BUILD_DIR) build
+		-derivedDataPath $(BUILD_DIR) build \
+		CODE_SIGN_IDENTITY="-" CODE_SIGN_STYLE=Manual \
+		CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=YES \
+		DEVELOPMENT_TEAM=""
 
 install: build
 	@echo "Copying $(APP_NAME).app to $(INSTALL_DIR)..."
